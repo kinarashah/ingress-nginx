@@ -47,7 +47,8 @@ fi
 if [ "$(uname)" == 'Linux' ]; then
   # NOTE: this is pinned to a digest for a reason!
   # docker run --rm --privileged multiarch/qemu-user-static@sha256:28ebe2e48220ae8fd5d04bb2c847293b24d7fbfad84f0b970246e0a4efd48ad6 --reset -p yes
-  docker run --rm --privileged tonistiigi/binfmt --install all
+  docker run --rm --privileged tonistiigi/binfmt:qemu-v5.0.1 --uninstall qemu-aarch64 && docker run --rm --privileged tonistiigi/binfmt:qemu-v5.0.1 --install arm64 
+  docker run --rm --privileged tonistiigi/binfmt:qemu-v5.0.1
 fi
 
 # Ensure we use a builder that can leverage it (the default on linux will not)
