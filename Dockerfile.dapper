@@ -41,5 +41,11 @@ ENV HOME ${DAPPER_SOURCE}
 ENV GIT_IN_DAPPER true
 RUN mkdir -p /etc/nginx/geoip
 WORKDIR ${DAPPER_SOURCE}
+
+RUN curl -L https://github.com/drone/drone-cli/releases/latest/download/drone_linux_amd64.tar.gz | tar zx
+RUN sudo install -t /usr/local/bin drone
+
+RUN drone info
+
 ENTRYPOINT ["./scripts/entry"]
 CMD [${STEP}]
