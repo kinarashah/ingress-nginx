@@ -35,7 +35,6 @@ WORKDIR  /etc/nginx
 
 RUN apk update
 RUN apk add --no-cache apk-tools=2.12.5-r0
-RUN sleep 10
 RUN apk add --no-cache busybox=1.32.1-r6
 RUN apk upgrade
 RUN apk add --no-cache diffutils
