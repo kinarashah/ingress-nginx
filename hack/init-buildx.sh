@@ -50,6 +50,7 @@ if ! grep -q "^Driver: docker$"  <<<"${current_builder}" && \
   exit 0
 fi
 
+
 # Ensure qemu is in binfmt_misc
 # Docker desktop already has these in versions recent enough to have buildx
 # We only need to do this setup on linux hosts
@@ -59,6 +60,7 @@ if [ "$(uname)" == 'Linux' ]; then
   docker run --rm --privileged tonistiigi/binfmt --uninstall qemu-aarch64 && docker run --rm --privileged tonistiigi/binfmt --install arm64 
   docker run --rm --privileged tonistiigi/binfmt
 fi
+
 
 # Ensure we use a builder that can leverage it (the default on linux will not)
 docker buildx rm ingress-nginx || true

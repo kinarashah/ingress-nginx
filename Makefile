@@ -232,16 +232,14 @@ misspell:  ## Check for spelling errors.
 run-ingress-controller: ## Run the ingress controller locally using a kubectl proxy connection.
 	@build/run-ingress-controller.sh
 
-.PHONY: builder
-builder:
-	docker buildx create --name $(BUILDER) --bootstrap --use || :
-	docker buildx inspect $(BUILDER)
+.PHONY: ensure-buildx
+ensure-buildx:
+	./hack/init-buildx.sh
 
 .PHONY: show-version
 show-version:
 	echo -n $(TAG)
 
-BUILDER ?= ingress-nginx
 PLATFORMS ?= amd64 arm arm64
 BUILDX_PLATFORMS ?= linux/amd64,linux/arm,linux/arm64
 
@@ -250,7 +248,6 @@ release: ensure-buildx clean
 # Rancher CI: the build has been done in the build step in the scripts/ci
 #	echo "Building binaries..."
 #	$(foreach PLATFORM,$(PLATFORMS), echo -n "$(PLATFORM)..."; ARCH=$(PLATFORM) make build;)
-
 	echo "Building and pushing ingress-nginx image...$(BUILDX_PLATFORMS)"
 
 	docker buildx build \
